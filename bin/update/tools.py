@@ -2,6 +2,7 @@ import os
 import hashlib
 import zipfile
 import tarfile
+import rarfile # the rarfile module should be install with pip
 
 def uncompress_file_to_dir(compressed_file, uncompress_dir):
     command = None
@@ -20,6 +21,11 @@ def uncompress_file_to_dir(compressed_file, uncompress_dir):
         zip_file = zipfile.ZipFile(compressed_file)
         zip_file.extractall(uncompress_dir)
         zip_file.close()
+    
+    elif extension == '.rar':
+        rar_file = rarfile.RarFile.open(compressed_file)
+        rar_file.extractall(uncompress_dir)
+        rar_file.close()
 
         uncompress_dir = os.path.join(uncompress_dir, os.listdir(uncompress_dir)[0])
         if " " in os.listdir(uncompress_dir)[0]:
